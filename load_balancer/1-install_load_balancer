@@ -18,8 +18,8 @@ frontend haproxy_ingress
 
 backend web_backends
     balance roundrobin
-    server web-01 web-01:80 check
-    server web-02 web-02:80 check
+    server web-01 34.198.248.145:80 check
+    server web-02 54.89.38.100:80 check
 EOF
 
 # Restart HAProxy service to apply changes
