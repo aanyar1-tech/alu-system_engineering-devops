@@ -5,7 +5,7 @@
 apt-get update -y
 apt-get install haproxy -y
 
-# Enable HAProxy to be managed via init script (set ENABLED=1 in default configuration)
+# Enable HAProxy to be managed via init script
 sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/haproxy
 
 # Configure HAProxy to load-balance traffic across web-01 and web-02 using roundrobin
@@ -18,9 +18,9 @@ frontend haproxy_ingress
 
 backend web_backends
     balance roundrobin
-    server web-01 34.198.248.145:80 check
-    server web-02 54.89.38.100:80 check
+    server web-01 web-01:80 check
+    server web-02 web-02:80 check
 EOF
 
-# Restart/start HAProxy service to apply changes
+# Restart HAProxy service to apply changes
 service haproxy restart
