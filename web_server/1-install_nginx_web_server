@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Installs Nginx, updates its default root page to contain 'Holberton School', and starts it.
+# Installs Nginx, updates its default root page, and starts the service.
 
 apt-get update -y
 apt-get install nginx -y
 echo 'Holberton School for the win!' > /var/www/html/index.html
-service nginx start
+service nginx restart
