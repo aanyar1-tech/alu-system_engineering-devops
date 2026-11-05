@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# This script accepts a username as an argument and runs whoami as that user
+su - "$1" -c "whoami"
