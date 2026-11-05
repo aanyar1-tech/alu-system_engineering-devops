@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Installs Nginx, updates its default root page, and starts the service.
+# Install Nginx, configure default index page with "Holberton School", and restart service
 
 apt-get update -y
-apt-get install nginx -y
-echo 'Holberton School for the win!' > /var/www/html/index.html
+apt-get install -y nginx
+echo "Holberton School for the win!" > /usr/share/nginx/html/index.html
 service nginx restart
