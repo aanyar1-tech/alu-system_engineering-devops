@@ -1,3 +1,3 @@
-# Web Stack Debugging 2 - Run software as another user
+# Web Stack Debugging 2 - Run Nginx as Nginx
 
-This directory contains a Bash script (`0-iamsomeoneelse`) that accepts a username as a command-line argument and executes `whoami` under that specified user account using `su`.
+This directory contains a Bash script (`1-run_nginx_as_nginx`) that updates Nginx configuration files to run server processes under the less-privileged `nginx` user and changes the listening port to `8080`.
