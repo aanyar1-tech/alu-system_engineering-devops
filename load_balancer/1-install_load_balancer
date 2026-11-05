@@ -37,8 +37,8 @@ frontend haproxy_incoming_traffic
 backend haproxy_backend_servers
     mode http
     balance roundrobin
-    server web-01 34.229.144.156:80 check
-    server web-02 54.174.167.14:80 check
+    server web-01 0.0.0.0:80 check
+    server web-02 0.0.0.0:80 check
 EOF
 
 service haproxy restart
