@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Configure Apache to run and serve 'Hello Holberton' at the root
+apt-get update -y
+apt-get install -y apache2
+service apache2 start
+echo "Hello Holberton" > /var/www/html/index.html
