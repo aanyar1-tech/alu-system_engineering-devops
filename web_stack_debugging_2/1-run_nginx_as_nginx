@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Configure Nginx to run as the nginx user and listen on port 8080 on all IPs
 
+# Create the nginx user if it does not already exist
+useradd -r -s /sbin/nologin nginx || true
+
 # Update Nginx user directive in nginx.conf
 sed -i 's/user www-data;/user nginx;/g' /etc/nginx/nginx.conf
 sed -i 's/#user  nobody;/user nginx;/g' /etc/nginx/nginx.conf
