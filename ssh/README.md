@@ -1,1 +1,1 @@
-SSH configuration and connection scripts
+SSH configuration and key management scripts
