@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # Configures Nginx to redirect /redirect_me to https://www.youtube.com/watch?v=QH2-TGUlwu4 with a 301 Moved Permanently response.
 
-# Ensure Nginx is installed
+# Ensure Nginx is installed and updated
 apt-get update -y
 apt-get install -y nginx
 
-# Add the redirection rule inside the server block of the default Nginx site configuration using sed
-sed -i '/listen 80 default_server;/a \    location /redirect_me {\n        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n    }' /etc/nginx/sites-available/default
+# Insert the redirection block right before the root location block in the default Nginx site configuration
+sed -i 's#location / {#location /redirect_me {\n        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n    }\n\n    location / {#' /etc/nginx/sites-available/default
 
-# Restart Nginx using init.d (avoiding systemctl)
+# Restart Nginx using init.d (strictly avoiding systemctl)
 /etc/init.d/nginx restart
