@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-# Install Nginx, configure default index page with "Holberton School", and restart service
+# This script installs Nginx, configures a custom index page with "Holberton School", and restarts Nginx using init.d instead of systemctl.
 
 apt-get update -y
 apt-get install -y nginx
-echo "Holberton School for the win!" > /usr/share/nginx/html/index.html
-service nginx restart
+
+echo "Holberton School for the win!" > /var/www/html/index.html
+
+/etc/init.d/nginx restart
