@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Stop apache2 and restart nginx to free port 80
+service apache2 stop
+service nginx restart
