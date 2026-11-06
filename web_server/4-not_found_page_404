@@ -8,8 +8,12 @@ apt-get install -y nginx
 # Create the custom 404 HTML file with the exact required string
 echo "Ceci n'est pas une page" > /var/www/html/404.html
 
-# Configure Nginx default site to use the custom 404 page via sed
-sed -i '/listen 80 default_server;/a \    error_page 404 /404.html;\n    location = /404.html {\n        internal;\n    }' /etc/nginx/sites-available/default
+# Configure Nginx default site to use the custom 404 page
+sed -i 's/listen 80 default_server;/listen 80 default_server;\n\terror_page 404 \/404.html;/' /etc/nginx/sites-available/default
+sed -i '/error_page 404 \/404.html;/a \    location = /404.html {\n        internal;\n    }' /etc/nginx/sites-available/default
+
+# Test Nginx configuration for syntax errors
+nginx -t
 
 # Restart Nginx using init.d (strictly avoiding systemctl)
 /etc/init.d/nginx restart
