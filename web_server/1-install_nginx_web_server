@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Installs and configures Nginx web server with a custom Hello World page
+# Installs and configures Nginx web server with Hello World
 
 apt-get -y update
 apt-get -y install nginx
-echo "Holberton School for the win!" > /var/www/html/index.html
-service nginx restart
+echo "Hello World!" > /var/www/html/index.html
+service nginx start
