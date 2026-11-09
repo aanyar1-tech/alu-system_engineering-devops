@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Installs and configures Nginx web server with custom Holberton School page (updated)
+# Installs and configures Nginx web server with a custom Holberton School page
 
 apt-get -y update
 apt-get -y install nginx
