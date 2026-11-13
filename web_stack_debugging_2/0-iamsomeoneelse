@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-# Accepts a username as an argument and runs whoami as that user
-su "$1" -c "whoami"
+# Accepts one argument (username) and runs whoami as that user
+su - "$1" -c "whoami"
