@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Configure Nginx user to nginx and port to 8080
+sed -i '/^user /d' /etc/nginx/nginx.conf
 sed -i '1i user nginx;' /etc/nginx/nginx.conf
-sed -i 's/listen 80;/listen 8080;/g' /etc/nginx/sites-available/default
+sed -i 's/listen [0-9]*;/listen 8080;/g' /etc/nginx/sites-available/default
 pkill nginx || true
 service nginx start
