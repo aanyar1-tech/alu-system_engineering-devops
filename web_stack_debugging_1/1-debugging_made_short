@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Prepares runtime directory, configures Nginx port, and restarts service
-mkdir -p /run/nginx
+# Configures Nginx to listen on port 80 and restarts service
 sed -i 's/8080/80/g' /etc/nginx/sites-available/default
 service nginx restart
