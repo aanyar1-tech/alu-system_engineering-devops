@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-# Makes Nginx listen on port 80 by restoring the default site symlink
+# Makes Nginx listen on port 80 and starts the daemon directly
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-service nginx restart
+/usr/sbin/nginx
