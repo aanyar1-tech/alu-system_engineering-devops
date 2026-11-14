@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# Configure Nginx to listen on port 80 and restart service cleanly
+# Configures Nginx to listen on port 80
 sed -i 's/listen [0-9]*;/listen 80;/g' /etc/nginx/sites-available/default
-sed -i 's/listen \[::\]:[0-9]*;/listen \[::\]:80;/g' /etc/nginx/sites-available/default
-pkill -9 nginx || true
-service nginx start
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx restart
