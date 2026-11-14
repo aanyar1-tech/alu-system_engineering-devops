@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-# Configure nginx to listen on port 80
-service apache2 stop
-sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+# Configures Nginx to listen on port 80 and starts service
+sed -i 's/listen [0-9]*;/listen 80;/g' /etc/nginx/sites-available/default
+sed -i 's/listen \[::\]:[0-9]*;/listen \[::\]:80;/g' /etc/nginx/sites-available/default
+service nginx restart
