@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# A script that displays the home directory of a given user
+if [ -z "$1" ]; then
+    exit 1
+fi
+
+home=$(getent passwd "$1" | cut -d: -f6)
+if [ -n "$home" ]; then
+    echo "$home"
+fi
