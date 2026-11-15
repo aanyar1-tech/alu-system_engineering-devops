@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
-# Configures UFW port forwarding rules to redirect port 8080 to port 80
-*nat
-:PREROUTING ACCEPT [0:0]
-:INPUT ACCEPT [0:0]
-:OUTPUT ACCEPT [0:0]
-:POSTROUTING ACCEPT [0:0]
+# Configures UFW port forwarding to redirect port 8080/TCP to port 80/TCP
 
-# Forward traffic from port 8080 to port 80
--A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-ports 80
+# Ensure UFW is installed
+apt-get update
+apt-get install -y ufw
 
-COMMIT
+# Enable UFW forwarding in /etc/default/ufw
+sed -i 's/DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/g' /etc/default/ufw
+sed -i 's/DEFAULT_FORWARD_POLICY="REJECT"/DEFAULT_FORWARD_POLICY="ACCEPT"/g' /etc/default/ufw
+
+# Configure NAT rules in /etc/ufw/before.rules if not already present
+if ! grep -q "A PREROUTING -p tcp --dport 8080" /etc/ufw/before.rules; then
+    sed -i '/^\*filter/i *nat\n:PREROUTING ACCEPT [0:0]\n-A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-ports 80\nCOMMIT\n' /etc/ufw/before.rules
+fi
+
+# Reload UFW to apply changes
+ufw reload
