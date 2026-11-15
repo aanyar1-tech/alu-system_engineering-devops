@@ -5,7 +5,7 @@
 apt-get update
 apt-get -y install nginx
 
-# Insert add_header directive right after server { or listen 80 default_server; in Nginx default site configuration
-sed -i '/listen 80 default_server;/a \    add_header X-Served-By $hostname;' /etc/nginx/sites-available/default
+# Insert add_header right after the first 'server {' block in default site configuration
+sed -i '/server {/a \    add_header X-Served-By $hostname;' /etc/nginx/sites-available/default
 
 service nginx restart
