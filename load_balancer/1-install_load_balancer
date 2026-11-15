@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
-# Installs and configures HAProxy load balancer with web-01 and web-02
-apt-get update -y
+# Installs HAProxy and configures roundrobin load balancing for web-01 and web-02
+apt-get update
 apt-get install -y haproxy
 
-# Append backend and frontend configuration cleanly to haproxy.cfg
-echo "" >> /etc/haproxy/haproxy.cfg
-echo "frontend web-frontend" >> /etc/haproxy/haproxy.cfg
-echo "    bind *:80" >> /etc/haproxy/haproxy.cfg
-echo "    default_backend web-backend" >> /etc/haproxy/haproxy.cfg
-echo "" >> /etc/haproxy/haproxy.cfg
-echo "backend web-backend" >> /etc/haproxy/haproxy.cfg
-echo "    balance roundrobin" >> /etc/haproxy/haproxy.cfg
-echo "    server web-01 54.210.43.155:80 check" >> /etc/haproxy/haproxy.cfg
-echo "    server web-02 54.165.201.9:80 check" >> /etc/haproxy/haproxy.cfg
-
-# Enable and restart HAProxy service
 sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/haproxy
+
+cat << 'CONFIG' >> /etc/haproxy/haproxy.cfg
+
+frontend hapr_front
+    bind *:80
+    default_backend hapr_back
+
+backend hapr_back
+    balance roundrobin
+    server web-01 54.210.43.155:80 check
+    server web-02 54.165.201.9:80 check
+CONFIG
+
 service haproxy restart
