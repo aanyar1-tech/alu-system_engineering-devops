@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Configures HAProxy for SSL termination on port 443
+
+# Install HAProxy if not already installed
+apt-get update
+apt-get install -y haproxy openssl
+
+# Create certificate directory
+mkdir -p /etc/haproxy/certs
+
+# Generate a self-signed SSL certificate and key
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout /etc/haproxy/certs/haproxy.key \
+  -out /etc/haproxy/certs/haproxy.crt \
+  -subj "/C=RW/ST=Kigali/L=Kigali/O=ALU/CN=localhost"
+
+# Combine certificate and key into a single .pem file required by HAProxy
+cat /etc/haproxy/certs/haproxy.crt /etc/haproxy/certs/haproxy.key > /etc/haproxy/certs/haproxy.pem
+
+# Append SSL frontend configuration to haproxy.cfg
+cat << 'CONFIG' >> /etc/haproxy/haproxy.cfg
+
+frontend https_frontend
+    bind *:443 ssl crt /etc/haproxy/certs/haproxy.pem
+    default_backend web-backend
+
+backend web-backend
+    balance roundrobin
+    server web-01 54.210.43.155:80 check
+    server web-02 54.165.201.9:80 check
+CONFIG
+
+# Enable and restart HAProxy
+sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/haproxy
+service haproxy restart
