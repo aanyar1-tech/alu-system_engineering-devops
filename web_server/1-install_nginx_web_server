@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-# Installs Nginx, serves a page containing "Holberton School" on port 80
-export DEBIAN_FRONTEND=noninteractive
-apt-get update -y
+# Installs Nginx web server, configures the default root page with Holberton School, and starts the service
+
+apt-get update
 apt-get install -y nginx
-mkdir -p /var/www/html
+
+# Ensure the default index page contains the required string
 echo "Holberton School for the win!" > /var/www/html/index.html
-if service nginx status > /dev/null 2>&1; then
-    service nginx reload
-else
-    service nginx start || nginx
-fi
+
+# Restart Nginx using service instead of systemctl
+service nginx restart
